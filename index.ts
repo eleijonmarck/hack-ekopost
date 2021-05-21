@@ -141,15 +141,20 @@ const loginToEkopost = async (page: puppeteer.Page) => {
   // fs -> read the dir
   // INPUT:
   // read all invoices files to memory
-  const dir = `invoices`;
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+  const invoiceDir = `invoices/${year}${month}${day}`;
+
   let filePaths: string[] = [];
   const absolutePath = path.resolve("./");
-  fs.readdirSync(dir).forEach((file) => {
+  fs.readdirSync(invoiceDir).forEach((file) => {
     // skip the physical sendout directory
     if (file.includes("physical")) {
       return;
     }
-    filePaths.push(absolutePath + "/" + dir + "/" + file);
+    filePaths.push(absolutePath + "/" + invoiceDir + "/" + file);
   });
 
   // iteration of uploading the files
@@ -170,7 +175,7 @@ const loginToEkopost = async (page: puppeteer.Page) => {
   }
 
   // upload physical paper invoices
-  const physicalStatementDir = `invoices/physical-paper-invoices`;
+  const physicalStatementDir = `${invoiceDir}/physical-paper-invoices`;
   let filePathsPhysical: string[] = [];
   fs.readdirSync(physicalStatementDir).forEach((file) => {
     // skip the physical sendout directory
