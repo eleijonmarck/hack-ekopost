@@ -17,3 +17,4 @@ yarn build && node dist/index.js
 - parse the invoices directory directly and ask the user which folder to upload
 - press the send button -> until we see high five then ask the user again
 - can create multiple sessions and upload all folders at the same time
+- also uploads the physical sendouts that should be out for the customers that HAS to get a physical letter
